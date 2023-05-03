@@ -23,8 +23,7 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-const hostname = '0.0.0.0';
 const port = 3000;
-app.listen(port, hostname, () => {
+app.listen(port, () => {
     console.log(`server is running at http://${hostname}:${port}/`);
 });
