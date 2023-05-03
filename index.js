@@ -5,11 +5,19 @@ app.use(express.json());
 
 app.get('/home', (req, res) => {
     res.status(200).json({
-        body: {
-            name: 'Bangladesh',
-            Description: 'Bangladesh is a beautiful country',
-            status: 'active',
-        },
+        body: [
+            {
+                name: 'Bangladesh',
+                Description: 'Bangladesh is a beautiful country',
+                status: 'active',
+            },
+
+            {
+                name: 'Pakistan',
+                Description: 'Pakistan is a muslim country',
+                status: 'active',
+            },
+        ],
     });
 });
 
