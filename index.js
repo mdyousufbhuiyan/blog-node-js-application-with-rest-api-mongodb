@@ -61,10 +61,10 @@ app.get('/api/myhome', (req, res, next) => res.status(201).json({
     }),
 );
 
-const port = process.env.PORT || 4000;
+// const port = process.env.PORT || 4000;
 connectDB().then(() => {
-    app.listen(port, () => {
-        console.log(`server is running at ${port}/`);
+    app.listen(4000, () => {
+        console.log(`server is running at ${4000}/`);
         // connectDB();
     });
 });
