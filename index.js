@@ -2,6 +2,7 @@ const express = require('express');
 // express app initialization
 const app = express();
 const url = require('url');
+const path = require('path');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -11,6 +12,8 @@ const connectDB = require('./config/connectionDB');
 const authRoute = require('./routes/auth/authRoute');
 const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
+
+app.use(express.static(path.join(__dirname, 'public')));
 // support json
 app.use(express.json());
 // to see the request...........
@@ -24,7 +27,7 @@ app.use('/api/postblog', postRoute);
 // upload file........
 const uploadStorage = multer.diskStorage({
     destination: (req, file, callBack) => {
-        callBack(null, './uploads');
+        callBack(null, './public');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -40,10 +43,10 @@ const upload = multer({ storage: uploadStorage });
 app.post('/api/upload', upload.single('file'), (req, res, next) => {
     const hostname = req.headers.host;
     const { pathname } = url.parse(req.url); // pathname = '/MyApp'
-    console.log(`http://${hostname}/uploads/${req.body.myFileName}`);
+    console.log(`http://${hostname}/public/${req.body.myFileName}`);
     res.status(201).json({
         message: 'File Uploaded Successfully',
-        url: `http://${hostname}/uploads/${req.body.myFileName}`,
+        url: `http://${hostname}/public/${req.body.myFileName}`,
     });
     // req.files is array of `photos` files
     // req.body will contain the text fields, if there were any
@@ -55,7 +58,8 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-app.get('/api/myhome', (req, res, next) => res.status(201).json({
+app.get('/api/myhome', (req, res, next) =>
+    res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
