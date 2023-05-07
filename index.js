@@ -55,7 +55,8 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-app.get('/api/myhome', (req, res, next) => res.status(201).json({
+app.get('/api/myhome', (req, res, next) =>
+    res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
