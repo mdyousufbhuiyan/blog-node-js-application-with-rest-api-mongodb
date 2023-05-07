@@ -55,17 +55,16 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-app.get('/api/myhome', (req, res, next) =>
-    res.status(201).json({
+app.get('/api/myhome', (req, res, next) => res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
 );
 
-// const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 connectDB().then(() => {
-    app.listen(4000, () => {
-        console.log(`server is running at ${4000}/`);
+    app.listen(port, () => {
+        console.log(`server is running at ${port}/`);
         // connectDB();
     });
 });
