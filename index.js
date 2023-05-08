@@ -1,6 +1,7 @@
 const express = require('express');
 // express app initialization
 const app = express();
+const fileupload = require('express-fileupload');
 const url = require('url');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -14,6 +15,12 @@ const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 
 // app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+    fileupload({
+        useTempFiles: true,
+        tempFileDir: '/tmp',
+    }),
+);
 app.use('/tmp', express.static('tmp'));
 // support json
 app.use(express.json());
