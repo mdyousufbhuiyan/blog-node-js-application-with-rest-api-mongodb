@@ -28,7 +28,7 @@ app.use('/api/postblog', postRoute);
 // upload file........
 const uploadStorage = multer.diskStorage({
     destination: (req, file, callBack) => {
-        callBack(null, './public');
+        callBack(null, '/public');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -59,8 +59,7 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-app.get('/api/myhome', (req, res, next) =>
-    res.status(201).json({
+app.get('/api/myhome', (req, res, next) => res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
