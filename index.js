@@ -1,12 +1,12 @@
 const express = require('express');
 // express app initialization
 const app = express();
-const fileupload = require('express-fileupload');
 const url = require('url');
 const path = require('path');
 const dotenv = require('dotenv');
 
 dotenv.config();
+const fileupload = require('express-fileupload');
 const morgan = require('morgan');
 const multer = require('multer');
 const connectDB = require('./config/connectionDB');
@@ -19,7 +19,7 @@ app.use(
     fileupload({
         useTempFiles: true,
         tempFileDir: '/tmp',
-    }),
+    })
 );
 app.use('/tmp', express.static('tmp'));
 // support json
@@ -66,8 +66,7 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-app.get('/api/myhome', (req, res, next) =>
-    res.status(201).json({
+app.get('/api/myhome', (req, res, next) => res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
