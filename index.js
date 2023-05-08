@@ -14,7 +14,7 @@ const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use('/temp', express.static('public'));
+app.use('/temp', express.static('temp'));
 // support json
 app.use(express.json());
 // to see the request...........
@@ -59,8 +59,7 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-app.get('/api/myhome', (req, res, next) =>
-    res.status(201).json({
+app.get('/api/myhome', (req, res, next) => res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
