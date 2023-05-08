@@ -14,7 +14,7 @@ const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public', express.static('public'));
+app.use('/temp', express.static('public'));
 // support json
 app.use(express.json());
 // to see the request...........
@@ -28,7 +28,7 @@ app.use('/api/postblog', postRoute);
 // upload file........
 const uploadStorage = multer.diskStorage({
     destination: (req, file, callBack) => {
-        callBack(null, '/public');
+        callBack(null, './temp');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -59,7 +59,8 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-app.get('/api/myhome', (req, res, next) => res.status(201).json({
+app.get('/api/myhome', (req, res, next) =>
+    res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
