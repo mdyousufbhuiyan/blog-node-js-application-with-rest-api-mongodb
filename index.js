@@ -14,7 +14,7 @@ const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use('/temp', express.static('temp'));
+app.use('/tmp', express.static('tmp'));
 // support json
 app.use(express.json());
 // to see the request...........
@@ -28,7 +28,7 @@ app.use('/api/postblog', postRoute);
 // upload file........
 const uploadStorage = multer.diskStorage({
     destination: (req, file, callBack) => {
-        callBack(null, './temp');
+        callBack(null, './tmp');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -44,10 +44,10 @@ const upload = multer({ storage: uploadStorage });
 app.post('/api/upload', upload.single('file'), (req, res, next) => {
     const hostname = req.headers.host;
     const { pathname } = url.parse(req.url); // pathname = '/MyApp'
-    console.log(`http://${hostname}/public/${req.body.myFileName}`);
+    console.log(`http://${hostname}/tmp/${req.body.myFileName}`);
     res.status(201).json({
         message: 'File Uploaded Successfully',
-        url: `http://${hostname}/public/${req.body.myFileName}`,
+        url: `http://${hostname}/tmp/${req.body.myFileName}`,
     });
     // req.files is array of `photos` files
     // req.body will contain the text fields, if there were any
@@ -59,7 +59,8 @@ function errorHandler(err, req, res, next) {
     }
     res.status(500).json({ error: err });
 }
-app.get('/api/myhome', (req, res, next) => res.status(201).json({
+app.get('/api/myhome', (req, res, next) =>
+    res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
