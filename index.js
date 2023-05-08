@@ -15,7 +15,7 @@ const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use(fileUpload());
+//app.use(fileUpload());
 app.use('/tmp', express.static('tmp'));
 // support json
 app.use(express.json());
@@ -26,7 +26,7 @@ app.use(morgan('dev'));
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
 app.use('/api/postblog', postRoute);
-// app.use(fileUpload({useTempFiles: true,tempFileDir: '/tmp/'}));
+app.use(fileUpload({useTempFiles: true,tempFileDir: '/tmp'}));
 // default options
 
 // upload file........
@@ -58,7 +58,7 @@ app.post('/api/upload', function(req, res) {
   
     sampleFile = req.files.sampleFile;
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    uploadPath = __dirname + '/tmp/' +uniqueSuffix+"-"+ sampleFile.name;
+    uploadPath = '/tmp/' +uniqueSuffix+"-"+ sampleFile.name;
   
     sampleFile.mv(uploadPath, function(err) {
       if (err) {
