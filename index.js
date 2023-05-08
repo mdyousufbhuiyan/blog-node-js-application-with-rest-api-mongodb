@@ -13,8 +13,8 @@ const authRoute = require('./routes/auth/authRoute');
 const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('./public', express.static('public'));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static('public'));
 // support json
 app.use(express.json());
 // to see the request...........
