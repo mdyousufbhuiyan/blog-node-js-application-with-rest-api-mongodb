@@ -14,7 +14,7 @@
       
         sampleFile = req.files.sampleFile;
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-        uploadPath ='./tmp/' +uniqueSuffix+"-"+ sampleFile.name;
+        uploadPath ='/tmp/' +uniqueSuffix+"-"+ sampleFile.name;
       
         sampleFile.mv(uploadPath, function(err) {
           if (err) {
