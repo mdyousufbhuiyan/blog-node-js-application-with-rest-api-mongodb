@@ -26,7 +26,7 @@ exports.signupController = async (req, res, next) => {
 };
 exports.loginController = async (req, res, next) => {
     try {
-        const { userName, password } = req.body;
+        const { userName, password } = req.query;
         const user = await User.findOne({ userName });
         if (!user) {
             return res.status(400).json({
