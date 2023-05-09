@@ -16,7 +16,7 @@ const postRoute = require('./routes/postRoute');
 
 // app.use(express.static(path.join(__dirname, 'public')));
 //app.use(fileUpload());
-app.use('/tmp', express.static('tmp'));
+app.use('/tmp/', express.static('tmp'));
 // support json
 app.use(express.json());
 // to see the request...........
