@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const User = require('../model/userModel');
 
 exports.getAllUsers = async (req, res, next) => {
-    const users = await User.find();
+    const users = await User.find().select({ __v: 0 });
     // throw new Error('Required');
     return res.status(200).json({
         users,

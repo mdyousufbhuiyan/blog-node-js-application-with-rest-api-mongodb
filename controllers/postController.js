@@ -4,12 +4,12 @@ const { post } = require('../routes/userRoute');
 exports.createPost = async (req, res, next) => {
     try {
         const {
- title, body, userName, category, photo 
+ title, body, userId, category, photo 
 } = req.body;
         const post = await Post.create({
             title,
             body,
-            userName,
+            userId,
             category,
             photo,
         });
@@ -27,18 +27,18 @@ exports.createPost = async (req, res, next) => {
 exports.getAllPost = async (req, res, next) => {
     try {
         // const { userName } = req.params;
-        const { userName, category } = req.query;
+        const { userId, category } = req.query;
         let posts;
-        if (userName) {
-            posts = await Post.find({ userName });
+        if (userId) {
+            posts = await Post.find({ userId }).select({ __v: 0 });
         } else if (category) {
             posts = await Post.find({
                 category: {
                     $in: [category],
                 },
-            });
+            }).select({ __v: 0 });
         } else {
-            posts = await Post.find();
+            posts = await Post.find().select({ __v: 0 });
         }
         // const posts = await Post.find();
         return res.status(201).json({
@@ -55,9 +55,9 @@ exports.getAllPost = async (req, res, next) => {
 
 exports.getPost = async (req, res, next) => {
     try {
-        const { userId } = req.params;
+        const { postId } = req.params;
 
-        const singlepost = await Post.findById(userId);
+        const singlepost = await Post.findById(postId).select({ __v: 0 });
         // const posts = await Post.find();
         return res.status(201).json({
             message: 'Success',
@@ -72,8 +72,8 @@ exports.getPost = async (req, res, next) => {
 };
 exports.updatePost = async (req, res, next) => {
     try {
-        const { userId } = req.params;
-        const post = await Post.findById(userId);
+        const { postId } = req.params;
+        const post = await Post.findById(postId);
 
         if (!post) {
             return res.status(401).json({
@@ -81,7 +81,7 @@ exports.updatePost = async (req, res, next) => {
             });
         }
 
-        const updatedPost = await Post.findByIdAndUpdate(userId, req.body, { new: true });
+        const updatedPost = await Post.findByIdAndUpdate(postId, req.body, { new: true });
         return res.status(201).json({
             message: 'Successfully Updated',
             data: updatedPost,
@@ -95,8 +95,8 @@ exports.updatePost = async (req, res, next) => {
 };
 exports.updateAnyField = async (req, res, next) => {
     try {
-        const { userId } = req.params;
-        const post = await Post.findById(userId);
+        const { postId } = req.params;
+        const post = await Post.findById(postId);
 
         if (!post) {
             return res.status(401).json({
@@ -104,7 +104,7 @@ exports.updateAnyField = async (req, res, next) => {
             });
         }
 
-        const updatedPost = await Post.findOneAndUpdate({ _id: userId }, req.body, { new: true });
+        const updatedPost = await Post.findOneAndUpdate({ _id: postId }, req.body, { new: true });
         return res.status(201).json({
             message: 'Successfully Updated',
             data: updatedPost,
@@ -119,8 +119,8 @@ exports.updateAnyField = async (req, res, next) => {
 
 exports.deletePost = async (req, res, next) => {
     try {
-        const { userId } = req.params;
-        const post = await Post.findById(userId);
+        const { postId } = req.params;
+        const post = await Post.findById(postId);
 
         if (!post) {
             return res.status(401).json({
@@ -128,7 +128,7 @@ exports.deletePost = async (req, res, next) => {
             });
         }
 
-        const updatedPost = await Post.findByIdAndDelete(userId);
+        const updatedPost = await Post.findByIdAndDelete(postId);
         return res.status(201).json({
             message: 'Successfully Deleted',
             data: updatedPost,
