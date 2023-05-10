@@ -21,9 +21,9 @@ exports.getAllCategory = async (req, res, next) => {
         const { name } = req.query;
         let categorys;
         if (name) {
-            categorys = await Category.find({ name });
+            categorys = await Category.find({ name }).select({ __v: 0 });
         } else {
-            categorys = await Category.find();
+            categorys = await Category.find().select({ __v: 0 });
         }
 
         return res.status(201).json({
@@ -41,7 +41,7 @@ exports.getAllCategory = async (req, res, next) => {
 exports.getCategory = async (req, res, next) => {
     try {
         const { categoryId } = req.params;
-        const category = await Category.findById(categoryId);
+        const category = await Category.findById(categoryId).select({ __v: 0 });
         return res.status(201).json({
             message: 'Success',
             data: category,

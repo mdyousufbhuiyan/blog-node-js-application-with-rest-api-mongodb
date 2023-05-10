@@ -1,21 +1,22 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const postSchema = new mongoose.Schema(
     {
         title: {
             type: String,
             trim: true,
-            required: true,
+            required: [true, "title can't be empty"],
             unique: true,
         },
         body: {
             type: String,
-            required: true,
+            required: [true, "body can't be empty"],
         },
-        userName: {
+        userId: {
             type: String,
             trim: true,
-            default: 'admin',
+            required: [true, "userId can't be empty"],
         },
         category: {
             type: Array,
@@ -23,11 +24,13 @@ const postSchema = new mongoose.Schema(
         },
         photo: {
             type: String,
-            required: true,
+            required: [true, "photo can't be empty"],
         },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
+uniqueValidator.defaults.type = 'mongoose-unique-validator';
+postSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
 
 const Post = mongoose.model('Post', postSchema);
 

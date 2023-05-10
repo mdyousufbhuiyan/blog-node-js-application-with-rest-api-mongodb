@@ -10,10 +10,10 @@ const {
 const { authCheckingMiddleWare } = require('../middlewares/auth');
 
 postRoute.get('/', authCheckingMiddleWare, getAllPost);
-postRoute.get('/:userId', authCheckingMiddleWare, getPost);
+postRoute.get('/:postId', authCheckingMiddleWare, getPost);
 postRoute.post('/', authCheckingMiddleWare, createPost);
-postRoute.put('/:userId', authCheckingMiddleWare, updatePost);
-postRoute.patch('/:userId', authCheckingMiddleWare, updateAnyField);
-postRoute.delete('/:userId', authCheckingMiddleWare, deletePost);
+postRoute.put('/:postId', authCheckingMiddleWare, updatePost);
+postRoute.patch('/:postId', authCheckingMiddleWare, updateAnyField);
+postRoute.delete('/:postId', authCheckingMiddleWare, deletePost);
 
 module.exports = postRoute;

@@ -24,6 +24,13 @@ app.use(express.json());
 // to see the request...........
 app.use(morgan('dev'));
 
+function errorHandler(err, req, res, next) {
+    console.log(`through error.........${err}`);
+    if (res.headersSent) {
+        return next(err);
+    }
+    res.status(500).json({ error: err });
+}
 // ....routes...............
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
@@ -88,18 +95,13 @@ app.use('/api/upload', fileUploadRoute);
 //     // req.body will contain the text fields, if there were any
 // });
 // default error handler
-function errorHandler(err, req, res, next) {
-    if (res.headersSent) {
-        return next(err);
-    }
-    res.status(500).json({ error: err });
-}
+
 app.get('/api/myhome', (req, res, next) => res.status(201).json({
         message: 'Success',
         data: 'data',
     }),
 );
-
+app.use(errorHandler);
 const port = process.env.PORT || 4000;
 connectDB().then(() => {
     app.listen(port, () => {
