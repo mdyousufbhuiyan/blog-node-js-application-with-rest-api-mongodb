@@ -5,7 +5,9 @@ const User = require('../../model/userModel');
 exports.signupController = async (req, res, next) => {
     try {
         req.body.password = await bcrypt.hash(req.body.password, 11);
-        const { name, userName, email, password, profile } = req.body;
+        const {
+ name, userName, email, password, profile 
+} = req.body;
         const user = await User.create({
             name,
             userName,
@@ -15,7 +17,7 @@ exports.signupController = async (req, res, next) => {
         });
         return res.status(200).json({
             message: `Hello ${name} your account has been created`,
-            user,
+            data: user,
         });
     } catch (err) {
         return res.status(500).json({
@@ -44,7 +46,7 @@ exports.loginController = async (req, res, next) => {
         });
         return res.status(201).json({
             message: 'Success',
-            body: user,
+            data: user,
             token,
         });
     } catch (err) {

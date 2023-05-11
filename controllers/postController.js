@@ -3,9 +3,7 @@ const { post } = require('../routes/userRoute');
 
 exports.createPost = async (req, res, next) => {
     try {
-        const {
- title, body, userId, category, photo 
-} = req.body;
+        const { title, body, userId, category, photo } = req.body;
         const post = await Post.create({
             title,
             body,
