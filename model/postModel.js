@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema(
             required: [true, "body can't be empty"],
         },
         userId: {
-            type: String,
+            type: mongoose.Schema.ObjectId,
             trim: true,
             required: [true, "userId can't be empty"],
         },

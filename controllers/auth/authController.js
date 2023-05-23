@@ -5,9 +5,7 @@ const User = require('../../model/userModel');
 exports.signupController = async (req, res, next) => {
     try {
         req.body.password = await bcrypt.hash(req.body.password, 11);
-        const {
- name, userName, email, password, profile 
-} = req.body;
+        const { name, userName, email, password, profile } = req.body;
         const user = await User.create({
             name,
             userName,
